@@ -7,27 +7,27 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-enum Selection {ROCK, PAPER, SCISSORS};
-
-void sig_handler(int signo) {
-    if (signo == SIGUSR1) {
-        //Compare ints
-        std::cout << "Signal Handled\n";
-    }
-}
+struct location_buf{
+    long mtype;
+    int location;
+};
 
 using namespace std;
 int main(int argc, char *argv[]) {
+    
+    // alien is trying to kill the player
+    // the player is gonna hide in a location(1-100)
+    // alien is guessing where player is
+    // if alien finds the player the player screams
 
-    pid_t steve;
-    pid_t jimmy;
+    pid_t alien; //alien is trying to get the player
+    pid_t player;
+    int playerLocation = rand() % 100;
 	
-	// parent process - Steve
-	
-	// fork child process - Jim
+
     pid_t temp;
 	if (!(temp = fork() )) {
-        jimmy = temp;
+        alien = temp;
         //child process
     }
     else {
