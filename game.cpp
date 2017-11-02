@@ -1,4 +1,11 @@
 #include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <unistd.h>
+#include <signal.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 enum Selection {ROCK, PAPER, SCISSORS};
 
@@ -18,7 +25,8 @@ int main(int argc, char *argv[]) {
 	// parent process - Steve
 	
 	// fork child process - Jim
-	if (! (pid_t temp = fork()) {
+    pid_t temp;
+	if (!(temp = fork() )) {
         jimmy = temp;
         //child process
     }
