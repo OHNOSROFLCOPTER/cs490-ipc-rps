@@ -12,7 +12,7 @@
 
 struct location_buf{
     long mtype;
-    unsigned char location;
+    int location;
 };
 
 using namespace std;
@@ -28,17 +28,17 @@ int main(int argc, char *argv[]) {
         int msqid = msgget(key, 666 | IPC_CREAT);
         bool isFound = false;
         bool isLess = false;
-        unsigned char locationGuess = 100;
-        unsigned char max = 99;
-        unsigned char min = 0;
+        int locationGuess = 100;
+        int max = 99;
+        int min = 0;
         struct location_buf newGuess = {2, 100};
         while (!isFound) {
-            unsigned char guess = (char) rand()%(max - min + 1) + min;
+            int guess = rand()%(max - min + 1) + min;
             newGuess.location = guess;
-            msgsnd(msqid, &newGuess, sizeof(char), 0);
-            std::cout << "Alien going to " + (int) guess << endl;
+            msgsnd(msqid, &newGuess, sizeof(int), 0);
+            std::cout << "Alien going to " << guess << endl;
             std::this_thread::sleep_for (std::chrono::seconds(1));
-            msgrcv(msqid, &newGuess, sizeof(char), 1, 0);
+            msgrcv(msqid, &newGuess, sizeof(int), 1, 0);
             switch (newGuess.location) {
                 case '0':
                     //alien found her!
