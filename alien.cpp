@@ -21,8 +21,15 @@ struct location_buf{
 int main(int argc, char *argv[]) {
 	srand(time(NULL));
 	
-	key_t key = ftok("msgQueue.txt", 'a');
+	//key_t key = ftok("msg2.txt", 'a');
+	key_t key = 10;
 	int msqid = msgget(key, 666 | IPC_CREAT);
+	
+	
+	if (msqid == -1) {
+		cerr << "error: " << errno << endl;
+		perror("msgget");
+	}
 	
 	bool isFound = false;
 	bool isLess = false;

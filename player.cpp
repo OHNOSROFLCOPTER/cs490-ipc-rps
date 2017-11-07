@@ -21,21 +21,28 @@ int main(int argc, char *argv[]) {
 	
 	srand(time(NULL));
 	int playerLocation = rand() % 100;
-	cerr << "Sam's location: " << playerLocation << endl;
 		
 	struct location_buf resultLocation = {1,200};
 	struct location_buf receivedLocation = {2,200};
 	
 	
-	key_t key = ftok("msgQueue.txt", 'a');
+//	key_t key = ftok("msg2.txt", 'a');
+	key_t key = 10;
 	int msqid = msgget(key, 666 | IPC_CREAT);
 	
-	cout << "Sam: Shhhh.....I'm hiding" << endl;
+	if (msqid == -1) {
+		cerr << "error: " << errno << endl;
+		perror("msgget");
+	}
+	
+	
+	
+	
 	bool isDead = false;
 	while (!isDead) {
+		cout << "Sam: Shhhh.....I'm hiding" << endl;
 		msgrcv(msqid, &receivedLocation, sizeof(int), 2, 0);
 		
-		cerr << "recieved location: " << receivedLocation.location << endl;
 		std::this_thread::sleep_for (std::chrono::seconds(1));
 		if(receivedLocation.location > playerLocation){
 			resultLocation.location = 2;
