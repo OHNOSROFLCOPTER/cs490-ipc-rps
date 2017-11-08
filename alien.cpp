@@ -34,9 +34,7 @@ int main(int argc, char *argv[]) {
 	bool isFound = false;
 	bool isLess = false;
 	
-	int locationGuess = 100;
-	
-	int max = 99;
+	int max = 9999;
 	int min = 0;
 	
 	struct location_buf newGuess = {2, 100};
@@ -58,11 +56,11 @@ int main(int argc, char *argv[]) {
 				break;
 			case 1:
 				//too low
-				min = guess;
+				min = guess + 1;
 				break;
 			case 2:
 				//too high
-				max = guess;
+				max = guess - 1;
 				break;
 			default:
 				std::cout << "ERROR: " << result.location << " :Somethin' bad happened!\n";

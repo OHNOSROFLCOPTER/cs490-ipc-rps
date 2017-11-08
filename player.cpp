@@ -20,7 +20,7 @@ struct location_buf{
 int main(int argc, char *argv[]) {
 	
 	srand(time(NULL));
-	int playerLocation = rand() % 100;
+	int playerLocation = rand() % 10000;
 		
 	struct location_buf resultLocation = {1,200};
 	struct location_buf receivedLocation = {2,200};
@@ -36,14 +36,28 @@ int main(int argc, char *argv[]) {
 	}
 	
 	
-	
+	cout << "Sam: Shhhh.....I'm hiding" << endl;
 	
 	bool isDead = false;
 	while (!isDead) {
-		cout << "Sam: Shhhh.....I'm hiding" << endl;
+		
 		msgrcv(msqid, &receivedLocation, sizeof(int), 2, 0);
 		
 		std::this_thread::sleep_for (std::chrono::seconds(1));
+		
+		int difference = abs(receivedLocation.location - playerLocation);
+		if(difference < 8 && difference >= 4 && difference != 0){
+			cout << "Sam: Oh no I think I hear it..." << endl;
+		} else if (difference < 4 && difference >= 3 && difference != 0){
+			cout << "Sam: ........(heavy breathing)" << endl;
+		} else if (difference <= 2 && difference != 0){
+			cout << "Sam: ........(heavy breathing intesifies)" << endl;
+		} else if (difference >= 8){
+			cout << "Sam: ........." << endl;
+		}
+		
+		
+		
 		if(receivedLocation.location > playerLocation){
 			resultLocation.location = 2;
 		}
@@ -59,16 +73,8 @@ int main(int argc, char *argv[]) {
 		}
 		
 		msgsnd(msqid, &resultLocation, sizeof(int), 0);
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	}	
 	
 }
+
+
