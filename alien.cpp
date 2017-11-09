@@ -62,6 +62,11 @@ int main(int argc, char *argv[]) {
 				//too high
 				max = guess - 1;
 				break;
+			case 3:
+				//Same moved
+				max = max + 100;
+				min = min - 100;
+				break;
 			default:
 				std::cout << "ERROR: " << result.location << " :Somethin' bad happened!\n";
 		}
